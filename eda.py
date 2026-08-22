@@ -1,4 +1,10 @@
 import pandas as pd
 df = pd.read_csv(r"data/WA_Fn-UseC_-Telco-Customer-Churn.csv")
-g = df[['gender']]
-print(g)
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'],errors='coerce')
+df['TotalCharges'] = df['TotalCharges'].fillna(0)
+df['Churn'] = df['Churn'].str.lower()
+df['Churn'] = df['Churn'].map({'yes':1,'no':0})
+df = df.drop('customerID',axis = 1)
+df = df.drop_duplicates()
+print(df.duplicated().sum())
+print(df.dtypes)
